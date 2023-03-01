@@ -1,4 +1,10 @@
 const app = require("express")();
+app.use(
+  cors({
+    origin: "*",
+  })
+);
+
 const server = require("http").createServer(app);
 
 const io = require("socket.io")(server, {
@@ -34,7 +40,7 @@ io.on("connection", async (socket) => {
   socket.on("questionAccepted", (payload) => {
     studentId = payload.studentId;
     teacherId = payload.teacherId;
-    io.to("tutors").emit("removeQuestion", { studentId })
+    io.to("tutors").emit("removeQuestion", { studentId });
     io.to(studentId).to(teacherId).emit("moveToCall", { studentId, teacherId });
     // socket.to(teacherId).emit("moveToCall", { studentId, teacherId });
   });
