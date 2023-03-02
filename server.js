@@ -5,6 +5,9 @@ app.use(
     origin: "*",
   })
 );
+app.get("/", (req, res) => {
+  console.log("App running fine");
+});
 
 const server = require("http").createServer(app);
 
